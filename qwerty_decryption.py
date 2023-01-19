@@ -1,6 +1,7 @@
 from PySide2.QtWidgets import QApplication, QWidget, QErrorMessage
 from ui.decrypt import Ui_DecryptWin
 import sys
+import autorun
 
 
 class MainWin(QWidget):
@@ -70,4 +71,5 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     win = MainWin()
     win.show()
+    autorun.add_to_startup()
     sys.exit(app.exec_())
