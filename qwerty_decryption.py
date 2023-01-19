@@ -2,6 +2,8 @@ from PySide2.QtWidgets import QApplication, QWidget, QErrorMessage
 from ui.decrypt import Ui_DecryptWin
 import sys
 import autorun
+import pystray
+import PIL.Image
 
 
 class MainWin(QWidget):
@@ -67,9 +69,30 @@ class MainWin(QWidget):
             self.ms_error('TypeError', 'Ключ не был распознан!', 'TypeError')
 
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
+def start_program():
+    if not QApplication.instance():
+        app = QApplication(sys.argv)
+    else:
+        app = QApplication.instance()
     win = MainWin()
     win.show()
     autorun.add_to_startup()
-    sys.exit(app.exec_())
+    app.exec_()
+
+
+def on_clicked(icon, item):
+    if str(item) == 'Открыть':
+        start_program()
+    if str(item) == 'Выход':
+        icon.stop()
+
+
+if __name__ == '__main__':
+    image = PIL.Image.open('icon/qwerty.png')
+
+    icon = pystray.Icon('Qwerty decryption', image, menu=pystray.Menu(
+        pystray.MenuItem('Открыть', on_clicked),
+        pystray.MenuItem('Выход', on_clicked)
+    ))
+
+    icon.run()
