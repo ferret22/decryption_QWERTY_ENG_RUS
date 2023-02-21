@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="win icon">
+    <file>qwerty.png</file>
+  </qresource>
+  <qresource prefix="radio button">
+    <file>radioOff.png</file>
+    <file>radioON.png</file>
+  </qresource>
+</RCC>
