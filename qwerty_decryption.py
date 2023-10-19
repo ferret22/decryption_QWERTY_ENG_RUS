@@ -7,10 +7,14 @@ import PIL.Image
 
 
 class MainWin(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, width: int, height: int, parent=None):
         QWidget.__init__(self, parent)
         self.ui = Ui_DecryptWin()
         self.ui.setupUi(self)
+
+        self.setMinimumSize(width // 2, height // 2)
+        self.setMaximumSize(width // 2, height - 100)
+
         self.error = QErrorMessage(self)
         self.ui.decryptButton.clicked.connect(self.decrypt)
 
@@ -74,7 +78,9 @@ def start_program():
         app = QApplication(sys.argv)
     else:
         app = QApplication.instance()
-    win = MainWin()
+
+    screen_rect = app.primaryScreen().availableGeometry()
+    win = MainWin(screen_rect.width(), screen_rect.height())
     win.show()
     autorun.add_to_startup()
     app.exec_()
